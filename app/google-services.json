@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1037546465528",
+    "firebase_url": "https://just-do-it-dd286.firebaseio.com",
+    "project_id": "just-do-it-dd286",
+    "storage_bucket": "just-do-it-dd286.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037546465528:android:2622372aeac1bccf60f30d",
+        "android_client_info": {
+          "package_name": "com.technoidtintin.justdoit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037546465528-fj9j55ekcdfujf2ljrpnr98o1le0m0pr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.technoidtintin.justdoit",
+            "certificate_hash": "43cb265701e446d579d9deed434cc67754d960d7"
+          }
+        },
+        {
+          "client_id": "1037546465528-b3jv4i7fn7fbscgquces7pat4ju9f1et.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC6BFTzaK_xj0PdIU2dPG3k4Er4NCndl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037546465528-b3jv4i7fn7fbscgquces7pat4ju9f1et.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
