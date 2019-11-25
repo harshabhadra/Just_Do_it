@@ -3,6 +3,8 @@ package com.technoidtintin.justdoit.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -71,16 +73,43 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //Make confirm password and user name input layout visible
-                logInBinding.textInputLayoutConfirmPassword.setVisibility(View.VISIBLE);
-                logInBinding.textInputLayoutUsername.setVisibility(View.VISIBLE);
+            }
+        });
 
-                logInBinding.logInButton.setText("Create Account");
+        //Setting text watcher to email text input
+        logInBinding.emailTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                //Hide sign in set up
-                logInBinding.signInLayout.setVisibility(View.INVISIBLE);
+            }
 
-                isLogIn = false;
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                logInBinding.textInputLayoutEmail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                logInBinding.textInputLayoutEmail.setErrorEnabled(true);
+            }
+        });
+
+        //Setting Text watcher to password text input
+        logInBinding.passwordTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                logInBinding.textInputLayoutEmail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                logInBinding.textInputLayoutEmail.setErrorEnabled(true);
             }
         });
 
@@ -91,22 +120,21 @@ public class LogInActivity extends AppCompatActivity {
 
                 loadingDialog = createLoadingDialog(LogInActivity.this);
                 loadingDialog.show();
-                if (!isLogIn) {
                     email = logInBinding.emailTextInput.getText().toString().trim();
                     password = logInBinding.passwordTextInput.getText().toString().trim();
-                    userName = logInBinding.userNameTextInput.getText().toString();
-                    confirmPassword = logInBinding.confirmPasswordTextInput.getText().toString();
-                    createNewAccount(userName, email, password);
-                } else {
-                    email = logInBinding.emailTextInput.getText().toString().trim();
-                    password = logInBinding.passwordTextInput.getText().toString().trim();
-                    logInUser(email, password);
-                }
+
+                    if (email.isEmpty()){
+                        logInBinding.textInputLayoutEmail.setError("Enter Email");
+                    }else if (password.isEmpty()){
+                        logInBinding.textInputLayoutPassword.setError("Enter Password");
+                    }else {
+                        logInUser(email, password);
+                    }
             }
         });
 
         //On Google sing in button click
-        logInBinding.googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+        logInBinding.googleSignInButton.setSize(SignInButton.SIZE_WIDE);
         logInBinding.googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
