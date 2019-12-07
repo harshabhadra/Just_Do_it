@@ -1,8 +1,10 @@
-package com.technoidtintin.justdoit;
+package com.technoidtintin.justdoit.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.technoidtintin.justdoit.R;
 
 public class ProfileActivity extends AppCompatActivity {
 

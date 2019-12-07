@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.technoidtintin.justdoit.Constants.Constants;
 import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.databinding.ActivityLogInBinding;
 
@@ -38,7 +39,7 @@ public class LogInActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     ActivityLogInBinding logInBinding;
     FirebaseAuth firebaseAuth;
-    private boolean isLogIn;
+    private boolean isNewUser;
     private FirebaseUser firebaseUser;
     private String email, password, userName, confirmPassword;
     private AlertDialog loadingDialog;
@@ -50,7 +51,12 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        isLogIn = true;
+        Intent intent = getIntent();
+        if (intent.hasExtra(Constants.NEW_USER)){
+            isNewUser = true;
+        }else {
+            isNewUser = false;
+        }
 
         //Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -119,9 +125,6 @@ public class LogInActivity extends AppCompatActivity {
         logInBinding.logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                loadingDialog = createLoadingDialog(LogInActivity.this);
-                loadingDialog.show();
                     email = logInBinding.emailTextInput.getText().toString().trim();
                     password = logInBinding.passwordTextInput.getText().toString().trim();
 
@@ -130,6 +133,8 @@ public class LogInActivity extends AppCompatActivity {
                     }else if (password.isEmpty()){
                         logInBinding.textInputLayoutPassword.setError("Enter Password");
                     }else {
+                        loadingDialog = createLoadingDialog(LogInActivity.this);
+                        loadingDialog.show();
                         logInUser(email, password);
                     }
             }
@@ -149,15 +154,16 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        loadingDialog = createLoadingDialog(this);
-        loadingDialog.show();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
-            loadingDialog.dismiss();
-            Log.e(TAG, "Name: " + currentUser.getDisplayName());
-            startScrollingActivity();
-        } else {
-            loadingDialog.dismiss();
+        if (!isNewUser) {
+            loadingDialog = createLoadingDialog(this);
+            loadingDialog.show();
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                loadingDialog.dismiss();
+                    startScrollingActivity();
+            } else {
+                loadingDialog.dismiss();
+            }
         }
     }
 
@@ -179,54 +185,20 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    //Create a new Account
-    private void createNewAccount(final String uName, String email, String password) {
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.e(TAG, "Account Created Successfully");
-                    firebaseUser = firebaseAuth.getCurrentUser();
-                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(uName)
-                            .build();
-                    firebaseUser.updateProfile(profileChangeRequest)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    loadingDialog.dismiss();
-                                    if (task.isSuccessful()) {
-                                        Log.e(TAG, "Name: " + firebaseUser.getDisplayName());
-                                        startScrollingActivity();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            });
-
-                } else {
-                    Log.e(TAG, "Account Creation failed: " + task.getException());
-                }
-            }
-        });
-    }
-
     //Log in User
-    private void logInUser(String email, String pass) {
-        firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                loadingDialog.dismiss();
-                if (task.isSuccessful()) {
-                    firebaseUser = firebaseAuth.getCurrentUser();
-                    startScrollingActivity();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
+    private void logInUser(final String email, String pass) {
+            firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    loadingDialog.dismiss();
+                    if (task.isSuccessful()) {
+
+                            startScrollingActivity();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
     }
 
     //Start ScrollActivity

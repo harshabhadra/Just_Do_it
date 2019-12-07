@@ -8,6 +8,9 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.technoidtintin.justdoit.Constants.Constants;
 import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.databinding.ActivitySignUpBinding;
 
@@ -28,18 +32,18 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     private static final String TAG = SignUpActivity.class.getSimpleName();
     private AlertDialog loadingDialog;
-    private String userName, email, password;
+    private String userName, email, password, confirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        //Initializing DataBinding
-        signUpBinding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up);
-
         //Initializing Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //Initializing DataBinding
+        signUpBinding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up);
 
         //On Click cancel button
         signUpBinding.signUpCancel.setOnClickListener(new View.OnClickListener() {
@@ -49,11 +53,107 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        //Adding text watcher to userName text input
+        signUpBinding.signUpUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                signUpBinding.textInputLayoutSignUpUserName.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                signUpBinding.textInputLayoutSignUpUserName.setErrorEnabled(true);
+            }
+        });
+
+        //Add text watcher to email address text input
+        signUpBinding.signUpEmailTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                signUpBinding.textInputLayoutSingUpEmail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                signUpBinding.textInputLayoutSingUpEmail.setErrorEnabled(true);
+            }
+        });
+
+        //Adding text watcher to password input text
+        signUpBinding.signUpPasswordTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                signUpBinding.textInputLayoutSignUpPassword.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                signUpBinding.textInputLayoutSignUpPassword.setErrorEnabled(true);
+            }
+        });
+
+        //Adding text watcher to confirm password text input
+        signUpBinding.signUpConfirmPasswordInputText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                signUpBinding.textInputLayoutSignUpConfirmPassword.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                signUpBinding.textInputLayoutSignUpConfirmPassword.setErrorEnabled(true);
+            }
+        });
+
         //On Click sign up button
         signUpBinding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                userName = signUpBinding.signUpUserName.getText().toString();
+                email = signUpBinding.signUpEmailTextInput.getText().toString();
+                password = signUpBinding.signUpPasswordTextInput.getText().toString();
+                confirmPassword = signUpBinding.signUpConfirmPasswordInputText.getText().toString();
+
+                if (userName == null){
+                    signUpBinding.textInputLayoutSignUpUserName.setError("Enter a User Name");
+                }else if (!isValidEmail(email)){
+                    signUpBinding.textInputLayoutSingUpEmail.setError("Enter a valid email address");
+                }else if (password == null){
+                    signUpBinding.textInputLayoutSignUpPassword.setError("Enter Password");
+                }else if (confirmPassword == null){
+                    signUpBinding.textInputLayoutSignUpConfirmPassword.setError("Confirm Your Password");
+                }else if (!password.equals(confirmPassword)){
+                    signUpBinding.textInputLayoutSignUpConfirmPassword.setError("Password Mismatch");
+                }else {
+                    loadingDialog = createLoadingDialog(SignUpActivity.this);
+                    loadingDialog.show();
+                    createNewAccount(userName,email,password);
+                }
             }
         });
     }
@@ -89,9 +189,27 @@ public class SignUpActivity extends AppCompatActivity {
                                     loadingDialog.dismiss();
                                     if (task.isSuccessful()) {
                                         Log.e(TAG, "Name: " + firebaseUser.getDisplayName());
-                                        startScrollingActivity();
+                                        firebaseUser = firebaseAuth.getCurrentUser();
+                                        firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    firebaseUser = firebaseAuth.getCurrentUser();
+                                                    Toast.makeText(getApplicationContext(),"Verification Email is send to " + firebaseUser.getEmail(),
+                                                            Toast.LENGTH_LONG).show();
+                                                    backtoLogInActivity();
+                                                }else {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Failed to send Verification Email to " + firebaseUser.getEmail(),
+                                                            Toast.LENGTH_LONG).show();
+                                                    firebaseUser.delete();
+                                                }
+                                            }
+                                        });
+
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
+                                        Log.e(TAG,"Error: " + task.getException());
                                     }
 
                                 }
@@ -99,14 +217,17 @@ public class SignUpActivity extends AppCompatActivity {
 
                 } else {
                     Log.e(TAG, "Account Creation failed: " + task.getException());
+                    Toast.makeText(getApplicationContext(),"Error: " + task.getException(),Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismiss();
                 }
             }
         });
     }
 
     //Start ScrollActivity
-    private void startScrollingActivity() {
-        Intent intent = new Intent(SignUpActivity.this, ScrollingActivity.class);
+    private void backtoLogInActivity() {
+        Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+        intent.putExtra(Constants.NEW_USER,"new user");
         startActivity(intent);
         finish();
     }
@@ -118,5 +239,9 @@ public class SignUpActivity extends AppCompatActivity {
         builder.setCancelable(false);
         builder.setView(layout);
         return builder.create();
+    }
+
+    public final static boolean isValidEmail(String target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

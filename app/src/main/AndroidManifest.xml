@@ -12,11 +12,10 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Activity.SignUpActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Activity.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.LogInActivity"
@@ -30,7 +29,7 @@
         <activity
             android:name=".Activity.ScrollingActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="preloaded_fonts"

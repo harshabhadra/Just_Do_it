@@ -32,12 +32,12 @@
                 android:text="Create Account"
                 android:elevation="8dp"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout6"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_sign_up_confirm_password"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_sign_up_confirm_password"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_sign_up_confirm_password" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout3"
+                android:id="@+id/textInputLayout_sing_up_email"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -47,38 +47,41 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_sign_up_user_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_up_email_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email Address" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout4"
+                android:id="@+id/textInputLayout_sign_up_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_sing_up_email"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_sing_up_email"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_sing_up_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_up_password_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout6"
+                android:id="@+id/textInputLayout_sign_up_confirm_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_sign_up_password"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_sign_up_password"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_sign_up_password">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_up_confirm_password_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Confirm Password" />

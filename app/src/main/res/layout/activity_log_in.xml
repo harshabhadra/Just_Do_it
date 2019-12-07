@@ -2,20 +2,19 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:background="@drawable/log_in_background"
         tools:context=".Activity.LogInActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/log_in_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:layout_gravity="top"
-            android:background="@drawable/log_in_background"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/log_in_button_back"
                 android:elevation="8dp"
@@ -35,38 +34,76 @@
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout_password"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout_password"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password" />
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="16dp"
                 android:src="@drawable/ic_my_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout_email"
-                style="@style/TextInputLayoutAppearance"
+            <TextView
+                android:id="@+id/create_account_tv"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2">
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="New User? Create Account"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/log_in_button"
+                app:layout_constraintStart_toStartOf="@+id/log_in_button"
+                app:layout_constraintTop_toBottomOf="@+id/log_in_button" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Email"
-                    android:maxLines="1"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Or"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/create_account_tv"
+                app:layout_constraintStart_toStartOf="@+id/create_account_tv"
+                app:layout_constraintTop_toBottomOf="@+id/create_account_tv" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="@+id/create_account_tv"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="@+id/create_account_tv"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googleSignInButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/create_account_tv"
+                app:layout_constraintStart_toStartOf="@+id/create_account_tv"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_password"
@@ -89,93 +126,39 @@
                     android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sign_in_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_below="@+id/log_in_layout"
-            android:layout_alignParentBottom="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/log_in_layout">
-
-            <TextView
-                android:id="@+id/create_account_tv"
-                style="@style/TextAppearance.AppCompat.Medium"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_email"
+                style="@style/TextInputLayoutAppearance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="New User? Create Account"
-                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Email"
+                    android:maxLines="1"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView2"
-                style="@style/TextAppearance.AppCompat.Body1"
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Or"
-                app:layout_constraintEnd_toEndOf="@+id/create_account_tv"
-                app:layout_constraintStart_toStartOf="@+id/create_account_tv"
-                app:layout_constraintTop_toBottomOf="@+id/create_account_tv" />
-
-            <TextView
-                android:id="@+id/already_user_tv"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="Already User? Log In"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                app:layout_constraintEnd_toEndOf="@+id/create_account_tv"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                app:layout_constraintEnd_toStartOf="@+id/textView2"
-                app:layout_constraintStart_toStartOf="@+id/create_account_tv"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/googleSignInButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/create_account_tv"
-                app:layout_constraintStart_toStartOf="@+id/create_account_tv"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                android:layout_marginEnd="8dp"
+                android:text="Forget Password?"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_password"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </FrameLayout>
 </layout>
 
