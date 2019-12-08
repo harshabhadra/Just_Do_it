@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.AddTaskActivity">
+
+        <Button
+            android:id="@+id/add_task_start_button"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/start_save_button"
+            android:text="Start"
+            app:layout_constraintStart_toStartOf="@+id/radioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <Button
+            android:id="@+id/add_task_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/start_save_button"
+            android:text="Save"
+            app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <EditText
+            android:id="@+id/task_title_editText"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/darker_gray"
+            android:ems="10"
+            android:fontFamily="@font/candal"
+            android:hint="Title Here"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:textColor="#000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/abeezee"
+            android:gravity="start|top"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:paddingStart="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_title_editText" />
+
+        <EditText
+            android:id="@+id/add_task_set_time_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+            android:ems="10"
+            android:hint="Set Time"
+            android:inputType="time"
+            app:layout_constraintStart_toEndOf="@+id/imageView_set_time"
+            app:layout_constraintTop_toBottomOf="@+id/add_task_save_button" />
+
+        <EditText
+            android:id="@+id/add_task_date_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+            android:ems="10"
+            android:hint="Set Date"
+            android:inputType="date"
+            app:layout_constraintStart_toEndOf="@+id/imageView_set_time"
+            app:layout_constraintTop_toBottomOf="@+id/add_task_set_time_edit" />
+
+        <EditText
+            android:id="@+id/end_time_text"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:hint="00.00"
+            android:inputType="time"
+            android:textColor="#000"
+            app:layout_constraintStart_toStartOf="@+id/end_time_label"
+            app:layout_constraintTop_toBottomOf="@+id/end_time_label" />
+
+        <ImageView
+            android:id="@+id/imageView_set_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_task_set_time_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_task_start_button"
+            app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView_set_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/add_task_date_edit"
+            app:layout_constraintStart_toStartOf="@+id/imageView_set_time"
+            app:layout_constraintTop_toTopOf="@+id/add_task_date_edit"
+            app:srcCompat="@drawable/ic_date_range_black_24dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="8dp"
+            android:orientation="horizontal"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_back"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:padding="8dp"
+                android:text="Personal" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_back"
+                android:button="@android:color/transparent"
+                android:padding="8dp"
+                android:text="Home" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_back"
+                android:button="@android:color/transparent"
+                android:padding="8dp"
+                android:text="Work" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawableEnd="@drawable/ic_local_offer_black_24dp"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/baloo"
+            android:text="Label"
+            android:textColor="#000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/start_time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Start Time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_task_date_edit" />
+
+        <TextView
+            android:id="@+id/start_time_text"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="12:10 AM"
+            app:layout_constraintStart_toStartOf="@+id/start_time_label"
+            app:layout_constraintTop_toBottomOf="@+id/start_time_label" />
+
+        <TextView
+            android:id="@+id/end_time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="End Time"
+            app:layout_constraintStart_toEndOf="@+id/start_time_text"
+            app:layout_constraintTop_toTopOf="@+id/start_time_label" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/save_group"
+            android:visibility="gone"
+            app:constraint_referenced_ids="add_task_set_time_edit,imageView_set_time,
+imageView_set_date,add_task_date_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/start_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="start_time_label,start_time_text,
+end_time_label,end_time_text"/>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/add_task_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/add_task_close_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_close_primary_24dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/archivo_black"
+                        android:gravity="center"
+                        android:text="Add New"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,6 +1,8 @@
 package com.technoidtintin.justdoit;
 
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.technoidtintin.justdoit.Activity.AddTaskActivity;
 
 
 /**
@@ -35,6 +41,8 @@ public class HomeFragment extends Fragment {
     private String mUserName = "Default";
     private Toolbar toolbar;
     private TextView mUserTv;
+    private FloatingActionButton fab;
+    private boolean isRotate = false;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,14 +57,26 @@ public class HomeFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.home_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("");
         //Initializing userName Tv and collapsingToolbarLayout
+        toolbar.setTitle("");
         mUserTv = view.findViewById(R.id.home_user_name_tv);
         CollapsingToolbarLayout collapsingToolbarLayout = view.findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitleEnabled(true);
-        collapsingToolbarLayout.setTitle("Just Do It");
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.BLACK);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsingToolbarLayoutExpandedTextStyle);
+        collapsingToolbarLayout.setTitle("Just Do It");
 
+        //Initializing Fab button
+        fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isRotate = ViewAnimation.rotateFab(view,!isRotate);
+                Intent intent = new Intent(getActivity(), AddTaskActivity.class);
+                startActivity(intent);
+
+            }
+        });
         //Initializing Firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {

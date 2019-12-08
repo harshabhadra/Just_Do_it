@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/abeezee</item>
+        <item>@font/acme</item>
+        <item>@font/alfa_slab_one</item>
         <item>@font/amita</item>
+        <item>@font/annie_use_your_telescope</item>
+        <item>@font/archivo_black</item>
+        <item>@font/atomic_age</item>
         <item>@font/baloo</item>
+        <item>@font/baloo_bhai</item>
+        <item>@font/butcherman</item>
+        <item>@font/candal</item>
+        <item>@font/henny_penny</item>
     </array>
 </resources>

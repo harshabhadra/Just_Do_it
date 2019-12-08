@@ -26,6 +26,7 @@
     <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
         <item name="android:textColor">@android:color/transparent</item>
         <item name="android:textSize">0sp</item>
+        <item name="android:fontFamily">@font/annie_use_your_telescope</item>
     </style>
 
     <!-- Text input field-->
@@ -50,5 +51,10 @@
         <item name="colorControlHighlight">@color/white</item>
         <item name="boxStrokeColor">@color/white</item>
         <item name="android:editTextColor">@color/white</item>
+    </style>
+
+    <style name="TaskDescriptionTextAppearance" parent="Widget.AppCompat.EditText">
+
+        <item name="android:colorControlActivated">@color/white</item>
     </style>
 </resources>
