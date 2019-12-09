@@ -221,7 +221,7 @@
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/save_group"
-            android:visibility="gone"
+            android:visibility="visible"
             app:constraint_referenced_ids="add_task_set_time_edit,imageView_set_time,
 imageView_set_date,add_task_date_edit"
             android:layout_width="wrap_content"
