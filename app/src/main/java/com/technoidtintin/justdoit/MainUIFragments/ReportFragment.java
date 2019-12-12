@@ -1,4 +1,4 @@
-package com.technoidtintin.justdoit;
+package com.technoidtintin.justdoit.MainUIFragments;
 
 
 import android.os.Bundle;

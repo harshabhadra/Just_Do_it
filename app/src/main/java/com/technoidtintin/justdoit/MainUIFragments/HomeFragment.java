@@ -1,4 +1,4 @@
-package com.technoidtintin.justdoit;
+package com.technoidtintin.justdoit.MainUIFragments;
 
 
 import android.content.Intent;
@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,14 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.technoidtintin.justdoit.Activity.AddTaskActivity;
+import com.technoidtintin.justdoit.R;
+import com.technoidtintin.justdoit.ViewAnimation;
 
 
 /**

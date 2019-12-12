@@ -1,11 +1,7 @@
 package com.technoidtintin.justdoit.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,14 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.technoidtintin.justdoit.HomeFragment;
+import com.technoidtintin.justdoit.MainUIFragments.HomeFragment;
 import com.technoidtintin.justdoit.R;
-import com.technoidtintin.justdoit.ReportFragment;
+import com.technoidtintin.justdoit.MainUIFragments.ReportFragment;
 
 public class ScrollingActivity extends AppCompatActivity {
-
 
     private static final String TAG = ScrollingActivity.class.getSimpleName();
 
@@ -71,7 +64,6 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
