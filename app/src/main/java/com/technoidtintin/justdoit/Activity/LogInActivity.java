@@ -73,17 +73,6 @@ public class LogInActivity extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this,gso);
 
-        //On Create Account text View click
-        logInBinding.createAccountTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
-            }
-        });
-
         //Setting text watcher to email text input
         logInBinding.emailTextInput.addTextChangedListener(new TextWatcher() {
             @Override

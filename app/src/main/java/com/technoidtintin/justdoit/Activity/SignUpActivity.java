@@ -23,11 +23,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.technoidtintin.justdoit.Constants.Constants;
 import com.technoidtintin.justdoit.R;
-import com.technoidtintin.justdoit.databinding.ActivitySignUpBinding;
+import com.technoidtintin.justdoit.databinding.FragmentCreateAccountBinding;
+
 
 public class SignUpActivity extends AppCompatActivity {
 
-    ActivitySignUpBinding signUpBinding;
+    FragmentCreateAccountBinding signUpBinding;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     private static final String TAG = SignUpActivity.class.getSimpleName();
@@ -37,13 +38,13 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.fragment_create_account);
 
         //Initializing Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
         //Initializing DataBinding
-        signUpBinding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up);
+        signUpBinding = DataBindingUtil.setContentView(this,R.layout.fragment_create_account);
 
         //On Click cancel button
         signUpBinding.signUpCancel.setOnClickListener(new View.OnClickListener() {

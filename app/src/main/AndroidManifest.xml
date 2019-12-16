@@ -11,20 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.AddTaskActivity"
-            android:parentActivityName=".Activity.ScrollingActivity"
-            android:label="Add New"/>
-        <activity
-            android:name=".Activity.SignUpActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Activity.LogInActivity"
+        <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.AddTaskActivity"
+            android:label="Add New"
+            android:parentActivityName=".Activity.ScrollingActivity" />
+        <activity
+            android:name=".Activity.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.LogInActivity"
+            android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".Activity.ScrollingActivity"

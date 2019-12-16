@@ -5,7 +5,7 @@
     android:viewportHeight="100.0"
     android:viewportWidth="100.0">
     <path
-        android:fillColor="@color/white"
+        android:fillColor="@color/colorAccent"
         android:pathData="M200,0H0v4.5h0v83.2 0.8h0c20,10 56,
         20.2 100,0.2c44.5,0 81.6,
         -7 99.5,-17.2h0V4.5h0V0z" />
