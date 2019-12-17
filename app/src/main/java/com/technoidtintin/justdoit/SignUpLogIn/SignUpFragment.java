@@ -1,7 +1,9 @@
-package com.technoidtintin.justdoit;
+package com.technoidtintin.justdoit.SignUpLogIn;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,8 +30,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.technoidtintin.justdoit.Activity.LogInActivity;
 import com.technoidtintin.justdoit.Activity.ScrollingActivity;
+import com.technoidtintin.justdoit.Constants.Constants;
+import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.databinding.FragmentSignUpBinding;
 
 
@@ -85,12 +88,19 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_container,new LogInFragment());
+                fragmentTransaction.replace(R.id.main_container,new CreateAccountFragment());
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_up,R.anim.slide_out_up);
                 fragmentTransaction.commit();
             }
         });
 
         return fragmentSignUpBinding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -131,6 +141,9 @@ public class SignUpFragment extends Fragment {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             Log.e(TAG,"User: " + user.getDisplayName());
+                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.IS_NEW_USER,Context.MODE_PRIVATE).edit();
+                            editor.putBoolean(Constants.NEW_USER,false);
+                            editor.apply();
                             startScrollingActivity();
                         } else {
                             // If sign in fails, display a message to the user.
