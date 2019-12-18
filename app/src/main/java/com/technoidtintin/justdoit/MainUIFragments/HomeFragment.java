@@ -3,11 +3,11 @@ package com.technoidtintin.justdoit.MainUIFragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,24 +22,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.technoidtintin.justdoit.Activity.AddTaskActivity;
+import com.technoidtintin.justdoit.Activity.ScrollingActivity;
+import com.technoidtintin.justdoit.Constants.Constants;
+import com.technoidtintin.justdoit.Model.UserDetails;
 import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.SignUpLogIn.MainActivity;
 import com.technoidtintin.justdoit.ViewAnimation;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 
 /**
@@ -55,12 +58,14 @@ public class HomeFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private StorageReference userImageRef;
+    private FirebaseFirestore fireStoredb;
 
-    private String phone;
     private String uId;
     private String emailId;
     private String mUserName = "Default";
     private boolean isRotate = false;
+    private boolean isUploaded;
+    private Bitmap userBitmap;
 
     private Toolbar toolbar;
     private TextView mUserTv;
@@ -76,6 +81,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -116,31 +122,37 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //Getting isUpdated values
+        ScrollingActivity scrollingActivity = (ScrollingActivity)getActivity();
+        isUploaded = scrollingActivity.isFirstLogIn();
+
         //Initializing Firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                //Get Current User
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
-                    Log.e(TAG, "user is " + firebaseUser.getDisplayName());
+
                     mUserName = firebaseUser.getDisplayName();
-                    mUserTv.setText(mUserName);
                     uId = firebaseUser.getUid();
-                    phone = firebaseUser.getPhoneNumber();
-                    if (firebaseUser.isEmailVerified()) {
-                        emailId = firebaseUser.getEmail();
+                    emailId = firebaseUser.getEmail();
+                    String imageUri = String.valueOf(firebaseUser.getPhotoUrl());
+                    if (isUploaded) {
+                        loadingDialog = createLoadingDialog(getContext());
+                        uploadDetails(new UserDetails(uId,mUserName,emailId));
+                    }else {
+                        Log.e(TAG,"User data is already uploaded");
                     }
 
-                    String imageUri = String.valueOf(firebaseUser.getPhotoUrl());
-                    Log.e(TAG, "Image uri: " + imageUri);
+                    mUserTv.setText(mUserName);
                     if (!imageUri.isEmpty()) {
                         Picasso.get().load(firebaseUser.getPhotoUrl())
                                 .error(getResources().getDrawable(R.drawable.profile_icon))
                                 .placeholder(getResources().getDrawable(R.drawable.profile_icon)).into(userImage);
-
                     }
-                    Log.e(TAG, "Uid is " + uId);
                 } else {
                     Log.e(TAG, "user is null");
                 }
@@ -151,6 +163,9 @@ public class HomeFragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         userImageRef = storageReference.child("ProfileImages");
+
+        //Initializing FireBaseFireStore
+        fireStoredb = FirebaseFirestore.getInstance();
 
         return view;
     }
@@ -170,14 +185,11 @@ public class HomeFragment extends Fragment {
     }
 
     //Upload Images to FireBase Storage
-    private void uploadImage() {
+    private void uploadImage(Bitmap bitmap) {
 
         String imgeName = mUserName.trim();
         StorageReference imageRef = userImageRef.child(imgeName);
 
-        userImage.setDrawingCacheEnabled(true);
-        userImage.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) userImage.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
@@ -188,14 +200,33 @@ public class HomeFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                 loadingDialog.dismiss();
-                Log.e(TAG,"Image Successfully uploaded to FireBase: " + taskSnapshot.getUploadSessionUri());
+                Log.e(TAG, "Image Successfully uploaded to FireBase: " + taskSnapshot.getUploadSessionUri());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
 
                 loadingDialog.dismiss();
-                Log.e(TAG,"Uploading failed to Firebase: " + e.getMessage());
+                Log.e(TAG, "Uploading failed to Firebase: " + e.getMessage());
+            }
+        });
+    }
+
+    private void uploadDetails(final UserDetails userDetails) {
+
+        fireStoredb.collection("User_details")
+                .document(userDetails.getUserEmail())
+                .set(userDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                loadingDialog.dismiss();
+                Log.e(TAG, "Data added to fire store ");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                loadingDialog.dismiss();
+                Log.e(TAG,"Error uploading data, " + e.getMessage());
             }
         });
     }

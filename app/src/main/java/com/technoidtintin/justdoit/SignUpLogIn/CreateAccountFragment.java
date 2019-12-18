@@ -3,6 +3,7 @@ package com.technoidtintin.justdoit.SignUpLogIn;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.technoidtintin.justdoit.Activity.ScrollingActivity;
+import com.technoidtintin.justdoit.Constants.Constants;
 import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.databinding.FragmentCreateAccountBinding;
 
@@ -202,7 +204,11 @@ public class CreateAccountFragment extends Fragment {
                                                 if (task.isSuccessful()) {
                                                     Toast.makeText(getContext(), "Verification Email is send to " + firebaseUser.getEmail(),
                                                             Toast.LENGTH_LONG).show();
+                                                    SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.IS_NEW_USER,Context.MODE_PRIVATE).edit();
+                                                    editor.putBoolean(Constants.NEW_USER,false);
+                                                    editor.apply();
                                                     Intent intent = new Intent(getActivity(), ScrollingActivity.class);
+                                                    intent.putExtra(Constants.FIRST_TIME_LOG_IN,true);
                                                     startActivity(intent);
                                                     getActivity().overridePendingTransition(R.anim.slide_in_up,R.anim.slide_in_down);
                                                     getActivity().finish();

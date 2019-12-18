@@ -159,6 +159,7 @@ public class SignUpFragment extends Fragment {
     //Start ScrollActivity
     private void startScrollingActivity() {
         Intent intent = new Intent(getActivity(), ScrollingActivity.class);
+        intent.putExtra(Constants.FIRST_TIME_LOG_IN,true);
         startActivity(intent);
         getActivity().finish();
     }
