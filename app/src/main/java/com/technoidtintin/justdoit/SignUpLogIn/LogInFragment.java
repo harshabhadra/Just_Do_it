@@ -11,7 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -44,6 +48,7 @@ public class LogInFragment extends Fragment {
 
     private static final String TAG = LogInFragment.class.getSimpleName();
     private static final int G_SIGN_IN = 1234;
+    private String userEmail, userPassword;
 
     private ActivityLogInBinding activityLogInBinding;
     private FirebaseAuth firebaseAuth;
@@ -81,7 +86,75 @@ public class LogInFragment extends Fragment {
         activityLogInBinding.googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingDialog = createLoadingDialog(getContext());
+                loadingDialog.show();
                 googleSignIn();
+            }
+        });
+
+        //Setting text watcher to email text input
+        activityLogInBinding.emailTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                activityLogInBinding.textInputLayoutEmail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                activityLogInBinding.textInputLayoutEmail.setErrorEnabled(true);
+            }
+        });
+
+        //Setting Text watcher to password text input
+        activityLogInBinding.passwordTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                activityLogInBinding.textInputLayoutEmail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                activityLogInBinding.textInputLayoutEmail.setErrorEnabled(true);
+            }
+        });
+
+        //Set onClickListener to Log In button
+        activityLogInBinding.logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userEmail = activityLogInBinding.emailTextInput.getText().toString().trim();
+                userPassword = activityLogInBinding.passwordTextInput.getText().toString().trim();
+
+                if (userEmail.isEmpty()){
+                    activityLogInBinding.textInputLayoutEmail.setError("Enter Valid Email Address");
+                }else if (userPassword.isEmpty()){
+                    activityLogInBinding.textInputLayoutPassword.setError("Enter Password");
+                }else {
+                    loadingDialog = createLoadingDialog(getContext());
+                    loadingDialog.show();
+                    logInUser(userEmail,userPassword);
+                }
+            }
+        });
+
+        //Set onClickListener to create new account tv
+        activityLogInBinding.logInCreateNewAccTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_container,new CreateAccountFragment());
+                fragmentTransaction.commit();
             }
         });
 
@@ -120,12 +193,33 @@ public class LogInFragment extends Fragment {
                 firebaseAuthWithGoogle(account);
 
             } catch (ApiException e) {
+                loadingDialog.dismiss();
                 // Google Sign In failed, update UI appropriately
                 Toast.makeText(getContext(),"Sign In Failed, Try again",Toast.LENGTH_LONG).show();
                 Log.w(TAG, "Google sign in failed", e);
                 // ...
             }
         }
+    }
+
+    //Log in User
+    private void logInUser(final String email, String pass) {
+        firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                loadingDialog.dismiss();
+                if (task.isSuccessful()) {
+                    startScrollingActivity();
+                } else {
+                    Toast.makeText(getContext(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                loadingDialog.dismiss();
+            }
+        });
     }
 
     //Start Google sign in
@@ -143,6 +237,7 @@ public class LogInFragment extends Fragment {
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        loadingDialog.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
@@ -160,7 +255,12 @@ public class LogInFragment extends Fragment {
 
                         // ...
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                loadingDialog.dismiss();
+            }
+        });
     }
 
     //Create Loading dialog

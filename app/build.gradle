@@ -43,6 +43,9 @@ dependencies {
     //Firebase Firestore
     implementation 'com.google.firebase:firebase-firestore:21.3.1'
 
+    //FireBase Storage
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+
     //Room
     def room_version = "2.2.2"
     implementation "androidx.room:room-runtime:$room_version"
@@ -53,5 +56,11 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Circular imageView
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 }
 apply plugin: 'com.google.gms.google-services'
