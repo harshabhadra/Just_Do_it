@@ -153,7 +153,7 @@ public class LogInFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_container,new CreateAccountFragment());
+                fragmentTransaction.replace(R.id.main_container,new SignUpFragment());
                 fragmentTransaction.commit();
             }
         });

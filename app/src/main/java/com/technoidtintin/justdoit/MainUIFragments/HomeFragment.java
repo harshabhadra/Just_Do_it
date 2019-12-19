@@ -3,18 +3,15 @@ package com.technoidtintin.justdoit.MainUIFragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,14 +32,15 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.technoidtintin.justdoit.Activity.AddTaskActivity;
 import com.technoidtintin.justdoit.Activity.ScrollingActivity;
-import com.technoidtintin.justdoit.Constants.Constants;
 import com.technoidtintin.justdoit.Model.UserDetails;
 import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.SignUpLogIn.MainActivity;
 import com.technoidtintin.justdoit.ViewAnimation;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -64,8 +62,9 @@ public class HomeFragment extends Fragment {
     private String emailId;
     private String mUserName = "Default";
     private boolean isRotate = false;
-    private boolean isUploaded;
+    private boolean isNewUser;
     private Bitmap userBitmap;
+    private String accountCreated;
 
     private Toolbar toolbar;
     private TextView mUserTv;
@@ -87,8 +86,8 @@ public class HomeFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.home_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        //Initializing userName Tv and collapsingToolbarLayout
         toolbar.setTitle("");
+        //Initializing userName Tv and collapsingToolbarLayout
         mUserTv = view.findViewById(R.id.home_user_name_tv);
         CollapsingToolbarLayout collapsingToolbarLayout = view.findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitleEnabled(true);
@@ -123,8 +122,8 @@ public class HomeFragment extends Fragment {
         });
 
         //Getting isUpdated values
-        ScrollingActivity scrollingActivity = (ScrollingActivity)getActivity();
-        isUploaded = scrollingActivity.isFirstLogIn();
+        ScrollingActivity scrollingActivity = (ScrollingActivity) getActivity();
+        isNewUser = scrollingActivity.isFirstLogIn();
 
         //Initializing Firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -140,11 +139,17 @@ public class HomeFragment extends Fragment {
                     uId = firebaseUser.getUid();
                     emailId = firebaseUser.getEmail();
                     String imageUri = String.valueOf(firebaseUser.getPhotoUrl());
-                    if (isUploaded) {
+                    if (isNewUser) {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+                        Date date = new Date();
+                        accountCreated = simpleDateFormat.format(date);
+                        Log.e(TAG,"date: " + accountCreated);
+
                         loadingDialog = createLoadingDialog(getContext());
-                        uploadDetails(new UserDetails(uId,mUserName,emailId));
-                    }else {
-                        Log.e(TAG,"User data is already uploaded");
+                        loadingDialog.show();
+                        uploadDetails(new UserDetails(mUserName, emailId,accountCreated));
+                    } else {
+                        Log.e(TAG, "User data is already uploaded");
                     }
 
                     mUserTv.setText(mUserName);
@@ -226,7 +231,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 loadingDialog.dismiss();
-                Log.e(TAG,"Error uploading data, " + e.getMessage());
+                Log.e(TAG, "Error uploading data, " + e.getMessage());
             }
         });
     }

@@ -171,7 +171,7 @@ public class CreateAccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_container,new LogInFragment());
+                fragmentTransaction.replace(R.id.main_container,new SignUpFragment());
                 fragmentTransaction.commit();
             }
         });

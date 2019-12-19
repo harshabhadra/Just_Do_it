@@ -2,23 +2,23 @@ package com.technoidtintin.justdoit.Model;
 
 public class UserDetails {
 
-    private String userId;
     private String userName;
     private String userEmail;
+    private String accountCreated;
 
-    public UserDetails(String userId, String userName, String userEmail) {
+    public UserDetails( String userName, String userEmail,String accountCreated) {
 
-        this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
+        this.accountCreated = accountCreated;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAccountCreated() {
+        return accountCreated;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAccountCreated(String accountCreated) {
+        this.accountCreated = accountCreated;
     }
 
     public String getUserName() {

@@ -34,6 +34,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     //Declaring FirebaseFirestore
     private FirebaseFirestore firebaseFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
