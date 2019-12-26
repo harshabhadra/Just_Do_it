@@ -9,28 +9,6 @@
         android:background="@color/white"
         tools:context=".Activity.AddTaskActivity">
 
-        <Button
-            android:id="@+id/add_task_start_button"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/start_save_button"
-            android:text="Start"
-            app:layout_constraintStart_toStartOf="@+id/radioGroup"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-        <Button
-            android:id="@+id/add_task_save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/start_save_button"
-            android:text="Save"
-            app:layout_constraintEnd_toEndOf="@+id/radioGroup"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
         <EditText
             android:id="@+id/task_title_editText"
             style="@style/TextAppearance.AppCompat.Medium"
@@ -62,6 +40,85 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title_editText" />
 
+        <LinearLayout
+            android:id="@+id/add_task_button_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/add_task_start_button"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="Start"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="281dp" />
+
+            <Button
+                android:id="@+id/add_task_save_button"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="Save"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="291dp"
+                tools:layout_editor_absoluteY="281dp" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/label_radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <RadioButton
+                android:id="@+id/personal_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_back"
+                android:button="@android:color/transparent"
+                android:onClick="onLabelSelected"
+                android:padding="8dp"
+                android:text="Personal" />
+
+            <RadioButton
+                android:id="@+id/home_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_back"
+                android:button="@android:color/transparent"
+                android:onClick="onLabelSelected"
+                android:padding="8dp"
+                android:text="Home" />
+
+            <RadioButton
+                android:id="@+id/work_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_back"
+                android:button="@android:color/transparent"
+                android:onClick="onLabelSelected"
+                android:padding="8dp"
+                android:text="Work" />
+        </RadioGroup>
+
         <TextView
             android:id="@+id/end_time_text"
             style="@style/TextAppearance.AppCompat.Large"
@@ -71,71 +128,12 @@
             android:backgroundTint="@color/white"
             android:hint="00.00"
             android:inputType="time"
+            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+            android:drawablePadding="8dp"
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="@+id/start_time_text"
             app:layout_constraintStart_toStartOf="@+id/end_time_label"
             app:layout_constraintTop_toBottomOf="@+id/end_time_label" />
-
-        <ImageView
-            android:id="@+id/imageView_set_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/addTaskSetTimeEdit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/addTaskSetTimeEdit"
-            app:srcCompat="@drawable/ic_access_time_black_24dp" />
-
-        <ImageView
-            android:id="@+id/imageView_set_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/addTaskSetDateEdit"
-            app:layout_constraintStart_toStartOf="@+id/imageView_set_time"
-            app:layout_constraintTop_toTopOf="@+id/addTaskSetDateEdit"
-            app:srcCompat="@drawable/ic_date_range_black_24dp" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="8dp"
-            android:orientation="horizontal"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/radio_button_back"
-                android:button="@android:color/transparent"
-                android:checked="true"
-                android:padding="8dp"
-                android:text="Personal" />
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/radio_button_back"
-                android:button="@android:color/transparent"
-                android:padding="8dp"
-                android:text="Home" />
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/radio_button_back"
-                android:button="@android:color/transparent"
-                android:padding="8dp"
-                android:text="Work" />
-        </RadioGroup>
 
         <TextView
             android:id="@+id/textView4"
@@ -156,10 +154,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="Start Time"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addTaskSetDateEdit" />
+            app:layout_constraintTop_toBottomOf="@+id/addTaskSetTimeEdit" />
 
         <TextView
             android:id="@+id/start_time_text"
@@ -168,6 +166,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="12:10 AM"
+            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+            android:drawablePadding="8dp"
             app:layout_constraintStart_toStartOf="@+id/start_time_label"
             app:layout_constraintTop_toBottomOf="@+id/start_time_label" />
 
@@ -175,33 +175,57 @@
             android:id="@+id/end_time_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="16dp"
             android:text="End Time"
             app:layout_constraintStart_toEndOf="@+id/start_time_text"
             app:layout_constraintTop_toTopOf="@+id/start_time_label" />
+
+        <TextView
+            android:id="@+id/addTaskSetTimeEdit"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+            android:drawablePadding="8dp"
+            android:hint="Set Time"
+            app:layout_constraintStart_toStartOf="@+id/save_time_label"
+            app:layout_constraintTop_toBottomOf="@+id/save_time_label" />
+
+        <TextView
+            android:id="@+id/addTaskSetDateEdit"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+            android:drawablePadding="8dp"
+            android:hint="Set Date"
+            app:layout_constraintStart_toStartOf="@+id/save_date_label"
+            app:layout_constraintTop_toBottomOf="@+id/save_date_label" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/save_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="imageView_set_time,
-imageView_set_date" />
+            android:visibility="invisible"
+            app:constraint_referenced_ids="addTaskSetTimeEdit
+            ,addTaskSetDateEdit,save_time_label,save_date_label" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/start_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="start_time_label,start_time_text,
-end_time_label,end_time_text" />
+            android:visibility="invisible"
+            app:constraint_referenced_ids="start_time_label
+            ,start_time_text,end_time_label,end_time_text" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:elevation="0dp"
             android:background="@color/white"
+            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -228,34 +252,44 @@ end_time_label,end_time_text" />
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/archivo_black"
-                        android:text="Add New"
                         android:paddingStart="16dp"
+                        android:text="Add New"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/addTaskSetTimeEdit"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/task_save_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            style="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintStart_toEndOf="@+id/imageView_set_time"
-            app:layout_constraintTop_toBottomOf="@+id/add_task_start_button" />
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/ic_save_white_24dp"
+            android:visibility="invisible"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/add_task_button_layout"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/addTaskSetDateEdit"
+            android:id="@+id/save_time_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            style="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintStart_toEndOf="@+id/imageView_set_date"
-            app:layout_constraintTop_toBottomOf="@+id/addTaskSetTimeEdit" />
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:text="Set Time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_radioGroup" />
+
+        <TextView
+            android:id="@+id/save_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Set Date"
+            app:layout_constraintStart_toEndOf="@+id/addTaskSetTimeEdit"
+            app:layout_constraintTop_toBottomOf="@+id/label_radioGroup" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

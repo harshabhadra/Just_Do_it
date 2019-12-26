@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -51,6 +51,13 @@
         <item name="colorControlHighlight">@color/white</item>
         <item name="boxStrokeColor">@color/white</item>
         <item name="android:editTextColor">@color/white</item>
+    </style>
+
+    <!-- Date picker style-->
+    <style name="DatePickerSpinner">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
 
     <style name="TaskDescriptionTextAppearance" parent="Widget.AppCompat.EditText">

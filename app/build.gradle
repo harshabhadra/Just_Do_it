@@ -62,5 +62,8 @@ dependencies {
 
     //Circular imageView
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    //SpinnerDatePicker
+    implementation 'com.github.drawers:SpinnerDatePicker:2.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

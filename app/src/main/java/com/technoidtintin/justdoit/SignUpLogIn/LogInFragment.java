@@ -249,7 +249,7 @@ public class LogInFragment extends Fragment {
                             startScrollingActivity();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(getContext(),"Sign in failed: " + task.getException(),Toast.LENGTH_SHORT).show();
                         }
 

@@ -32,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.technoidtintin.justdoit.Activity.AddTaskActivity;
 import com.technoidtintin.justdoit.Activity.ScrollingActivity;
+import com.technoidtintin.justdoit.Constants.Constants;
 import com.technoidtintin.justdoit.Model.UserDetails;
 import com.technoidtintin.justdoit.R;
 import com.technoidtintin.justdoit.SignUpLogIn.MainActivity;
@@ -102,6 +103,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 isRotate = ViewAnimation.rotateFab(view, !isRotate);
                 Intent intent = new Intent(getActivity(), AddTaskActivity.class);
+                intent.putExtra(Constants.USER_EMAIL,emailId);
                 startActivity(intent);
 
             }
